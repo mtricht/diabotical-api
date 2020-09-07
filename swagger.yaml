@@ -10,6 +10,8 @@ info:
     3. Open the game
     4. You can now find your token in the logs file `C:\Users\<Your name>\AppData\Roaming\Diabotical\Logs`
     5. Paste the token at [https://jwt.io/](https://jwt.io/) to see your user ID
+    
+    Suggestions? Find this on [github](https://github.com/mtricht/diabotical-api)
   version: 'v0'
 servers:
   - url: 'https://www.diabotical.com'
