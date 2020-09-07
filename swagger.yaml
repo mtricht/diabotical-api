@@ -132,4 +132,4 @@ components:
         schema:
           type: string
           example: 9a1c62de13ef40d69442a891b55a21fb
-        description: The ID of a user.
+        description: The ID of a user. Your own ID can be found in "C:\Users\<Your name>\AppData\Roaming\Diabotical\uuid.txt".
