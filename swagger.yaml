@@ -1,7 +1,15 @@
 openapi: 3.0.1
 info:
   title: Diabotical API
-  description: This is the unofficial documentation of the Arena FPS game 'Diabotical'. This API is used in-game.
+  description: |
+    This is the unofficial API documentation for the Arena FPS game 'Diabotical'.  
+
+    To get your token and user ID follow these steps:
+    1. Edit `C:\Program Files\Epic Games\Diabotical\ui\html\javascript\APIHandler.js` (or wherever you installed it)
+    2. Add `engine.call("echo", "ajax req token: "+ this.token);` on line 44, just after `//console.log("ajax req token:", this.token);`
+    3. Open the game
+    4. You can now find your token in the logs file `C:\Users\<Your name>\AppData\Roaming\Diabotical\Logs`
+    5. Paste the token at [https://jwt.io/](https://jwt.io/) to see your user ID
   version: '0.1'
 servers:
   - url: 'https://www.diabotical.com'
@@ -10,6 +18,7 @@ paths:
     get:
       tags:
       - Leaderboard
+      description: A paginated leaderboard
       parameters:
         - name: mode
           in: query
@@ -23,47 +32,149 @@ paths:
           example: '0'
       responses:
         '200':
-          description: A paginated leaderboard
+          description: Success
+  /api/v0/match/{matchID}:
+    get:
+      tags:
+      - Match
+      description: Match data
+      parameters:
+        - $ref: '#/components/parameters/MatchID'
+      responses:
+        '200':
+          description: Success
+  /api/v0/userlist/{name}:
+    get:
+      tags:
+      - User (Authenticated)
+      description: Find user by name
+      parameters:
+      - $ref: '#/components/parameters/Name'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+  /api/v0/user:
+    get:
+      tags:
+      - User (Authenticated)
+      description: Get current user
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+  /api/v0/user/customization:
+    get:
+      tags:
+      - User (Authenticated)
+      description: Get current user egg customization
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+  /api/v0/user/customization/{customizationID}/seen:
+    post:
+      tags:
+      - User (Authenticated)
+      description: Unknown, request body undocumented
+      parameters:
+        - $ref: '#/components/parameters/CustomizationID'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+  /api/v0/user/battlepass:
+    get:
+      tags:
+      - User (Authenticated)
+      description: Get battlepass information of current user
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+  /api/v0/user/huds:
+    get:
+      tags:
+      - User HUD (Authenticated)
+      description: Get saved HUDs
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+  /api/v0/user/huds/{hudID}:
+    get:
+      tags:
+      - User HUD (Authenticated)
+      description: Get hud by ID
+      parameters:
+      - $ref: '#/components/parameters/HudID'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+    post:
+      tags:
+      - User HUD (Authenticated)
+      parameters:
+      - $ref: '#/components/parameters/HudID'
+      description: Save hud, request body undocumented
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
   /api/v0/users/{userID}:
     get:
       tags:
       - User
+      description: A user
       parameters:
       - $ref: '#/components/parameters/UserID'
       responses:
         '200':
-          description: A user
+          description: Success
   /api/v0/users/{userID}/achievements:
     get:
       tags:
       - User
+      description: Achievements of user
       parameters:
       - $ref: '#/components/parameters/UserID'
       responses:
         '200':
-          description: Achievements of user
+          description: Success
   /api/v0/users/{userID}/leaderboard:
     get:
       tags:
       - User
+      description: Leaderboard positioned on user? Haven't seen it working yet.
       parameters:
       - $ref: '#/components/parameters/UserID'
       responses:
         '200':
-          description: Leaderboard positioned on user? Haven't seen it working yet.
+          description: Success
   /api/v0/users/{userID}/rating:
     get:
       tags:
       - User
       parameters:
       - $ref: '#/components/parameters/UserID'
+      description: User rating
       responses:
         '200':
-          description: User rating
+          description: Success
   /api/v0/users/{userID}/match:
     get:
       tags:
       - User
+      description: Last match of user
       parameters:
         - $ref: '#/components/parameters/UserID'
         - name: for
@@ -73,20 +184,22 @@ paths:
           example: last
       responses:
         '200':
-          description: Last match of user
+          description: Success
   /api/v0/users/{userID}/matches:
     get:
       tags:
       - User
+      description: Last 15 matches, doesn't seem to be paginated
       parameters:
         - $ref: '#/components/parameters/UserID'
       responses:
         '200':
-          description: Last 15 matches, doesn't seem to be paginated
+          description: Success
   /api/v0/users/{userID}/mainstats:
     get:
       tags:
       - User
+      description: Stats of user
       parameters:
         - $ref: '#/components/parameters/UserID'
         - name: for
@@ -96,26 +209,87 @@ paths:
           example: alltime
       responses:
         '200':
-          description: Stats of user
+          description: Success
   /api/v0/users/{userID}/stats:
     get:
       tags:
       - User
+      description: Stats of user
       parameters:
         - $ref: '#/components/parameters/UserID'
       responses:
         '200':
-          description: Stats of user
-  /api/v0/match/{matchID}:
+          description: Success
+  /api/v0/shop:
     get:
       tags:
-      - Match
-      parameters:
-        - $ref: '#/components/parameters/MatchID'
+      - Shop
+      description: Get shop data
+      security:
+      - bearerAuth: []
       responses:
         '200':
-          description: Match data
+          description: Success
+  /api/v0/shop/gift/redeem:
+    post:
+      tags:
+      - Shop
+      description: Redeem gift, request body undocumented
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+  /api/v0/shop/{itemID}/purchase:
+    post:
+      tags:
+      - Shop
+      description: Purchase a single item, request body undocumented
+      parameters:
+        - $ref: '#/components/parameters/ItemID'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+  /api/v0/shop/battlepass/{itemID}/purchase:
+    post:
+      tags:
+      - Shop
+      description: Purchase a bundle(?), request body undocumented
+      parameters:
+        - $ref: '#/components/parameters/ItemID'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+  /api/v0/shop/battlepass/tier/purchase:
+    post:
+      tags:
+      - Shop
+      description: Purchase battlepass levels, request body undocumented
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+  /api/v0/twitch/streamers:
+    get:
+      tags:
+      - Misc.
+      description: Get twitch streamers
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   parameters:
     MatchID:
         in: path
@@ -132,4 +306,36 @@ components:
         schema:
           type: string
           example: 9a1c62de13ef40d69442a891b55a21fb
-        description: The ID of a user. Your own ID can be found in "C:\Users\<Your name>\AppData\Roaming\Diabotical\uuid.txt".
+        description: The ID of a user.
+    HudID:
+        in: path
+        name: hudID
+        required: true
+        schema:
+          type: string
+          example: ??
+        description: The ID of a HUD.
+    ItemID:
+        in: path
+        name: itemID
+        required: true
+        schema:
+          type: string
+          example: ??
+        description: The ID of an item.
+    CustomizationID:
+        in: path
+        name: customizationID
+        required: true
+        schema:
+          type: string
+          example: ??
+        description: The ID of a customization.
+    Name:
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+          example: 2GD
+        description: A username.
