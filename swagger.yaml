@@ -4,8 +4,8 @@ info:
   description: |
     This is the unofficial API documentation for the Arena FPS game 'Diabotical'.  
 
+    Some endpoints require authentication. To get your token and user ID follow the steps bellow.  
     Warning: Do this at your own risk, I don't know if this can trigger the anti-cheat.
-    To get your token and user ID follow these steps:
     1. Edit `C:\Program Files\Epic Games\Diabotical\ui\html\javascript\APIHandler.js` (or wherever you installed it)
     2. Add `engine.call("echo", "ajax req token: "+ this.token);` on line 44, just after `//console.log("ajax req token:", this.token);`
     3. Open the game
