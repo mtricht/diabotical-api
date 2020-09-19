@@ -7,9 +7,9 @@ info:
     Some endpoints require authentication. To get your token and user ID follow the steps bellow.  
     Warning: Do this at your own risk, I don't know if this can trigger the anti-cheat.
     1. Edit `C:\Program Files\Epic Games\Diabotical\ui\html\javascript\APIHandler.js` (or wherever you installed it)
-    2. Add `engine.call("echo", "ajax req token: "+ this.token);` on line 44, just after `//console.log("ajax req token:", this.token);`
+    2. Add `engine.call("copy_text", this.token);` on line 44, just after `//console.log("ajax req token:", this.token);`
     3. Open the game
-    4. You can now find your token in the logs file `C:\Users\<Your name>\AppData\Roaming\Diabotical\Logs`
+    4. The token is now in your clipboard.
     5. Paste the token at [https://jwt.io/](https://jwt.io/) to see your user ID
     
     Am I missing something? Find this on [github](https://github.com/mtricht/diabotical-api)
