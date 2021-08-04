@@ -2,6 +2,7 @@ openapi: 3.0.1
 info:
   title: Diabotical API
   description: |
+    **It seems most, if not all, endpoints are no longer available.**
     This is the unofficial API documentation for the Arena FPS game 'Diabotical'.  
 
     Some endpoints require authentication. To get your token and user ID follow the steps bellow.  
